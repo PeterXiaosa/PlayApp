@@ -51,9 +51,9 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         _isVisible = true;
     }
 
-    protected int getLayoutId() {
-        return 0;
-    }
+//    protected int getLayoutId() {
+//        return 0;
+//    }
 
     @Override
     protected void onPause() {

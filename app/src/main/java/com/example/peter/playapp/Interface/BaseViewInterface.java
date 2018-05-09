@@ -6,4 +6,5 @@ public interface BaseViewInterface {
 
     public void initData();
 
+    public int getLayoutId();
 }

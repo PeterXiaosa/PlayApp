@@ -1,5 +1,7 @@
 package com.example.peter.playapp.base;
 
+import android.support.annotation.NonNull;
+
 import com.example.peter.playapp.HttpMethods;
 import com.example.peter.playapp.retrofit.Api;
 import com.example.peter.playapp.retrofit.ApiClient;
@@ -10,13 +12,19 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class BasePresenter <T>{
-    public T mvpView;
+
+    @NonNull
+    protected T mvpView;
+
     protected Api api;
     private CompositeDisposable mCompositeDisposable;
 
-    public void attachView(T mvpView){
-        this.mvpView = mvpView;
+    public void attachView(@NonNull T mvpView){
+//        this.mvpView = mvpView;
+        this.mvpView = checkNotNull(mvpView, "mvpView cannot be null !");
         this.api = ApiClient.retrofit().create(Api.class);
     }
 

@@ -1,40 +1,23 @@
-package com.example.peter.playapp;
+package com.example.peter.playapp.activity;
 
 import android.os.Parcel;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.peter.playapp.HttpMethods;
+import com.example.peter.playapp.R;
 import com.example.peter.playapp.base.BaseActivity;
 import com.example.peter.playapp.bean.ServerBean;
 import com.example.peter.playapp.bean.UserInfo;
-import com.google.gson.Gson;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends BaseActivity {
 
-    private static String BASE_URL = "http://47.100.210.98:8080/";
-    private static String TAG = "MainActivity";
-
-    private String phone, password;
     private ServerBean serverBean;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
 
     @Override
     public void initData() {
@@ -87,8 +70,8 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onNext(ServerBean value) {
                 serverBean = value;
-                String content = serverBean.getContent();
-                Toast.makeText(MainActivity.this, content, Toast.LENGTH_SHORT).show();
+//                String content = serverBean.getContent();
+//                Toast.makeText(MainActivity.this, content, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -111,5 +94,10 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
 
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_main;
     }
 }
