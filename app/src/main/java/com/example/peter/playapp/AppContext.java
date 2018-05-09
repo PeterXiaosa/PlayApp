@@ -12,7 +12,7 @@ public class AppContext extends BaseApplication {
     static AppContext instance;
 //    private List<Activity> activityList = new LinkedList<Activity>();
 
-    private AppContext()
+    public AppContext()
     {
     }
 
