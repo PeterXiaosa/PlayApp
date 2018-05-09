@@ -39,6 +39,7 @@
         android:layout_marginTop="@dimen/y70"
         android:background="@drawable/rounded_edittext">
         <EditText
+            android:id="@+id/activity_login_et_account"
             android:background="@null"
             android:layout_width="match_parent"
             android:layout_height="@dimen/x200"
@@ -63,6 +64,7 @@
         android:focusableInTouchMode="true"
         android:background="@drawable/rounded_edittext">
         <EditText
+            android:id="@+id/activity_login_et_password"
             android:background="@null"
             android:layout_width="match_parent"
             android:layout_height="@dimen/x200"
