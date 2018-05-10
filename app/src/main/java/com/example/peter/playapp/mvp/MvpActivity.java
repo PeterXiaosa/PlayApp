@@ -1,8 +1,10 @@
-package com.example.peter.playapp.base;
+package com.example.peter.playapp.mvp;
 
 import android.os.Bundle;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import com.example.peter.playapp.base.BaseActivity;
+import com.example.peter.playapp.base.BasePresenter;
+
 
 public abstract class MvpActivity<T extends BasePresenter> extends BaseActivity {
     protected T mvpPresenter;

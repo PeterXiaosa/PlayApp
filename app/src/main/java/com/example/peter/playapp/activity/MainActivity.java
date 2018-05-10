@@ -57,33 +57,33 @@ public class MainActivity extends BaseActivity {
 
     private void getData() {
         UserInfo userInfo = new UserInfo();
-        userInfo.setPhone("15216701562");
+        userInfo.setAccount("15216701562");
         userInfo.setPassword("fhc19950803");
 
-        HttpMethods.getInstance().login(userInfo, new Observer<ServerBean>() {
-            Disposable disposable;
-            @Override
-            public void onSubscribe(Disposable d) {
-                this.disposable = d;
-            }
-
-            @Override
-            public void onNext(ServerBean value) {
-                serverBean = value;
-//                String content = serverBean.getContent();
-//                Toast.makeText(MainActivity.this, content, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
+//        HttpMethods.getInstance().login(userInfo, new Observer<ServerBean>() {
+//            Disposable disposable;
+//            @Override
+//            public void onSubscribe(Disposable d) {
+//                this.disposable = d;
+//            }
+//
+//            @Override
+//            public void onNext(ServerBean value) {
+//                serverBean = value;
+////                String content = serverBean.getContent();
+////                Toast.makeText(MainActivity.this, content, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//
+//            }
+//        });
     }
 
     @Override

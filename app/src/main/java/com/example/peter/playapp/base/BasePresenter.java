@@ -12,8 +12,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 
+// Presenter 业务逻辑放这里，调度 V 和 M ，去实现业务逻辑。
 public class BasePresenter <T>{
 
     @NonNull
@@ -23,8 +23,8 @@ public class BasePresenter <T>{
     private CompositeDisposable mCompositeDisposable;
 
     public void attachView(@NonNull T mvpView){
-//        this.mvpView = mvpView;
-        this.mvpView = checkNotNull(mvpView, "mvpView cannot be null !");
+        this.mvpView = mvpView;
+//        this.mvpView = checkNotNull(mvpView, "mvpView cannot be null !");
         this.api = ApiClient.retrofit().create(Api.class);
     }
 

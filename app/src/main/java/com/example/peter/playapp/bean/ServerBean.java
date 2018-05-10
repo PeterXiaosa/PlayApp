@@ -1,9 +1,9 @@
 package com.example.peter.playapp.bean;
 
-public class ServerBean {
-    public int status;
-    public String msg;
-    public Object content;
+public class ServerBean<T> {
+    private int status;
+    private String msg;
+    private T content;
 
     public int getStatus() {
         return status;
@@ -21,11 +21,11 @@ public class ServerBean {
         this.msg = msg;
     }
 
-    public Object getContent() {
+    public T getContent() {
         return content;
     }
 
-    public void setContent(Object content) {
+    public void setContent(T content) {
         this.content = content;
     }
 }

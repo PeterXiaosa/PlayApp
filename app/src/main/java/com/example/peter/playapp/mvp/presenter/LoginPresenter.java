@@ -24,6 +24,8 @@ public class LoginPresenter extends BasePresenter<LoginView>{
                     public void onSuccess(LoginModel model) {
                         // 获取数据成功去更新View
                         mvpView.loginSuccess(model);
+
+                        model.saveAccessToken();
                     }
 
                     @Override

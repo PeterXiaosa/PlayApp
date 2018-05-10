@@ -1,5 +1,6 @@
 package com.example.peter.playapp;
 
+import com.example.peter.playapp.mvp.model.LoginModel;
 import com.example.peter.playapp.retrofit.Api;
 import com.example.peter.playapp.bean.ServerBean;
 import com.example.peter.playapp.bean.UserInfo;
@@ -41,7 +42,7 @@ public class HttpMethods {
         return sinalInstance.instance;
     }
 
-    public void login(UserInfo userInfo, Observer<ServerBean> observer){
+    public void login(UserInfo userInfo, Observer<LoginModel> observer){
         api.login(userInfo)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())

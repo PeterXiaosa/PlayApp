@@ -13,12 +13,6 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
 
     private boolean _isVisible;
 
-    public final int TITLE_LIMIT_NUM = 30;
-    public final int CONTENT_LIMIT_NUM = 4000;
-    public final int SAVE_LIMIT_IN_TODO = 50;
-    public final int CONTENT_LIMIT_IN_TASKINFO = 500;
-    public final int CONTENT_LIMIT_IN_VISITADDCONTENT = 300;
-
     private ProgressDialog waitDialog;
 
     @Override
