@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 
@@ -13,6 +14,7 @@ import com.example.peter.playapp.activity.LoginActivity;
 import com.example.peter.playapp.activity.MainActivity;
 import com.example.peter.playapp.base.BaseApplication;
 import com.example.peter.playapp.util.CertificateUtil;
+import com.example.peter.playapp.util.FixDexUtils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -55,6 +57,7 @@ public class AppContext extends BaseApplication {
 
         if (genKey.trim().equals("")) {
             genKey = CertificateUtil.generaterGenKey();
+            genKey = "peter08f8cee142599dd80660d9192a4520f7cadbf247";
 
             SharedPreferences sp = getSharedPreferences("genkeyLibrary", MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
@@ -110,6 +113,7 @@ public class AppContext extends BaseApplication {
             szDevIDShort = szDevIDShort + serial;
         }
         this.deviceId = szDevIDShort;
+        this.deviceId = "357696505656247e5570b44865736036768169";
     }
 
     public String getDeviceId(){

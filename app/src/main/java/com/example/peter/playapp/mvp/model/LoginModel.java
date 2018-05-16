@@ -19,8 +19,10 @@ public class LoginModel extends ServerBean{
     }
 
     public void saveAccessToken(){
-        JsonObject jsonObject = new JsonParser().parse(this.getContent().toString()).getAsJsonObject();
-        AppContext.getInstance().setAccessToken(String.valueOf(jsonObject.get("accesstoken")));
+        if (this.getContent() != null) {
+            JsonObject jsonObject = new JsonParser().parse(this.getContent().toString()).getAsJsonObject();
+            AppContext.getInstance().setAccessToken(String.valueOf(jsonObject.get("accesstoken")));
+        }
     }
 
 }

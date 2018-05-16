@@ -2,6 +2,16 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
+
+    signingConfigs {
+        myConfig {
+            keyAlias 'peter'
+            keyPassword 'playapppeter'
+            storeFile file('./keystore.jks')
+            storePassword 'playapppeter'
+        }
+    }
+
     defaultConfig {
         applicationId "com.example.peter.playapp"
         minSdkVersion 16
@@ -13,6 +23,7 @@ android {
     buildTypes {
         debug {
 //            buildConfigField "boolean", "DEBUG", "true"
+            signingConfig signingConfigs.myConfig
         }
 
         release {
@@ -20,6 +31,7 @@ android {
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.myConfig
         }
     }
 }
@@ -58,4 +70,5 @@ dependencies {
     implementation project(':resourcelib')
     // Dagger2
     implementation 'com.google.dagger:dagger:2.16'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.16'
 }

@@ -7,12 +7,12 @@ import com.example.peter.playapp.base.BasePresenter;
 
 
 public abstract class MvpActivity<T extends BasePresenter> extends BaseActivity {
-    protected T mvpPresenter;
+    protected T presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mvpPresenter = createPresenter();
+        presenter = createPresenter();
     }
 
     protected abstract T createPresenter();
@@ -20,9 +20,9 @@ public abstract class MvpActivity<T extends BasePresenter> extends BaseActivity 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        checkNotNull(mvpPresenter).detachView();
-        if (mvpPresenter != null){
-            mvpPresenter.detachView();
+//        checkNotNull(presenter).detachView();
+        if (presenter != null){
+            presenter.detachView();
         }
     }
 }

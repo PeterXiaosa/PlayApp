@@ -13,4 +13,5 @@
 
     <!-- Login界面的颜色值-->
     <color name="login_blue">#038BF5</color>
+    <color name="login_red">#FF0000</color>
 </resources>
