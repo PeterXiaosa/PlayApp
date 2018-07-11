@@ -35,6 +35,10 @@ public class AppContext extends BaseApplication {
         return instance;
     }
 
+    public static Context getAppContext() {
+        return instance;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

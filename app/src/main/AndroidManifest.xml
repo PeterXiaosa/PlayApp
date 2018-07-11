@@ -24,12 +24,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.LoginActivity"
-            android:label="@string/title_activity_login">
-
-        </activity>
-
-        <activity android:name=".activity.MainActivity"/>
-
+            android:label="@string/title_activity_login"></activity>
+        <activity android:name=".activity.MainActivity" />
         <activity android:name=".practice.keepAlive.KeepAliveActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,8 +34,23 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".practice.keepAlive.GrayService"/>
-        <service android:name=".practice.keepAlive.GrayService$GrayInnerService"/>
+        <service android:name=".practice.keepAlive.GrayService" />
+        <service android:name=".practice.keepAlive.GrayService$GrayInnerService" />
+
+        <activity android:name=".practice.keepAlive.onepx.OnepxActivity"></activity>
+
+        <receiver android:name=".practice.keepAlive.onepx.ScreenReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":main">
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT"/>
+                <action android:name="android.intent.action.SCREEN_ON"/>
+                <action android:name="android.intent.action.SCREEN_OFF"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
