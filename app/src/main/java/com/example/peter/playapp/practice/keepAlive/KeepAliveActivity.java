@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.peter.playapp.R;
+import com.example.peter.playapp.practice.keepAlive.jobservice.DaemonService;
+import com.example.peter.playapp.practice.keepAlive.jobservice.ScheduleService;
 import com.example.peter.playapp.practice.keepAlive.onepx.ScreenReceiver;
 
 import butterknife.BindView;
@@ -19,6 +21,7 @@ public class KeepAliveActivity extends AppCompatActivity {
 //    @BindView(R.id.activity_keep_alive_btn_open_service)
     Button btn_service;
     Button btn_one_px;
+    Button btn_job_service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,7 @@ public class KeepAliveActivity extends AppCompatActivity {
         setContentView(R.layout.activity_keep_alive);
         btn_service = findViewById(R.id.activity_keep_alive_btn_open_service);
         btn_one_px = findViewById(R.id.btn_one_px);
+        btn_job_service = findViewById(R.id.btn_job_service);
 
         btn_service.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +49,14 @@ public class KeepAliveActivity extends AppCompatActivity {
                 intentFilter.addAction("android.intent.action.SCREEN_ON");
                 intentFilter.addAction("android.intent.action.USER_PRESENT");
                 registerReceiver(receiver, intentFilter);
+            }
+        });
+
+        btn_job_service.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(KeepAliveActivity.this, DaemonService.class);
+                startService(intent);
             }
         });
     }

@@ -18,4 +18,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="开启1px"/>
+
+    <Button
+        android:id="@+id/btn_job_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>
