@@ -3,18 +3,17 @@ package com.example.peter.playapp.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.peter.playapp.AppContext;
-import com.example.peter.playapp.Interface.DaggerLoginActivityComponent;
 import com.example.peter.playapp.R;
-import com.example.peter.playapp.bean.Factory;
-import com.example.peter.playapp.bean.Product;
 import com.example.peter.playapp.mvp.MvpActivity;
 import com.example.peter.playapp.bean.UserInfo;
 import com.example.peter.playapp.mvp.model.LoginModel;
@@ -40,15 +39,18 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     @BindView(R.id.activity_login_tv_login)
     TextView tv_login;
 
-    @Inject
-    Factory factory;
-
     // 可以考虑一下将加载数据放到presenter中去。
     @Override
     public void initData() {
-        DaggerLoginActivityComponent.create().inject(this);
-        String show = factory.show();
-        Toast.makeText(this, show, Toast.LENGTH_SHORT).show();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CALL_PHONE},
+                        0);
+            }else {
+
+            }
+        }
     }
 
     @Override
@@ -59,7 +61,25 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
 
     @Override
     public void initView() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_SETTINGS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CALL_PHONE},
+                        0);
+            }else {
 
+            }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_SETTINGS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CALL_PHONE},
+                        0);
+            }else {
+
+            }
+        }
     }
 
     @Override
@@ -69,24 +89,26 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
 
     @OnClick(R.id.activity_login_tv_login)
     public void setBtn_login(){
-        if ("".equals(et_account.getText().toString())){
-            Toast.makeText(this, "未填写账号", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if ("".equals(et_password.getText().toString())){
-            Toast.makeText(this, "未填写密码", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
-        UserInfo userInfo = new UserInfo();
-        userInfo.setAccount(et_account.getText().toString());
-        userInfo.setPassword(et_password.getText().toString());
-        userInfo.setGenkey(AppContext.getInstance().getGenKey());
-        userInfo.setDeviceId(AppContext.getInstance().getDeviceId());
-
-        presenter.login(userInfo);
-
-        DownLoadUtil.downClassFile();
+//        if ("".equals(et_account.getText().toString())){
+//            Toast.makeText(this, "未填写账号", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        if ("".equals(et_password.getText().toString())){
+//            Toast.makeText(this, "未填写密码", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        UserInfo userInfo = new UserInfo();
+//        userInfo.setAccount(et_account.getText().toString());
+//        userInfo.setPassword(et_password.getText().toString());
+//        userInfo.setGenkey(AppContext.getInstance().getGenKey());
+//        userInfo.setDeviceId(AppContext.getInstance().getDeviceId());
+//
+//        presenter.login(userInfo);
+//
+//        DownLoadUtil.downClassFile();
     }
 
     @Override

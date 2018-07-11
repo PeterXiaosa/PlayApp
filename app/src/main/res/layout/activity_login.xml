@@ -92,4 +92,9 @@
         android:text="登录"
         android:textSize="19sp"
         android:textColor="@color/white" />
+
+    <View
+        android:layout_width="@dimen/x260"
+        android:layout_height="@dimen/x260"
+        android:background="@drawable/traitangle"/>
 </LinearLayout>

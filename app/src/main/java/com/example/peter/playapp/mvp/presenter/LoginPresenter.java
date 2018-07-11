@@ -13,6 +13,7 @@ public class LoginPresenter extends BasePresenter<LoginView>{
 
     public LoginPresenter(@NonNull LoginView view){
         attachView(view);
+        initLoginData();
     }
 
     public void login(UserInfo userInfo){
@@ -38,5 +39,9 @@ public class LoginPresenter extends BasePresenter<LoginView>{
                         mvpView.cancelLoading();
                     }
                 });
+    }
+
+    public void initLoginData(){
+
     }
 }

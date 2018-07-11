@@ -15,6 +15,8 @@ import com.example.peter.playapp.activity.MainActivity;
 import com.example.peter.playapp.base.BaseApplication;
 import com.example.peter.playapp.util.CertificateUtil;
 import com.example.peter.playapp.util.FixDexUtils;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -48,7 +50,14 @@ public class AppContext extends BaseApplication {
     private void init() {
         generateGenKey();
         setDeviceId();
+        refWatcher = LeakCanary.install(this);
     }
+
+    public static RefWatcher getRefWatcher(Context context) {
+        AppContext application = (AppContext) context.getApplicationContext();
+        return application.refWatcher;
+    }
+    private RefWatcher refWatcher;
 
     private void generateGenKey() {
         //初始化生成genKey
