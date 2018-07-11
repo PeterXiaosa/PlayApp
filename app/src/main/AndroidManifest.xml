@@ -22,10 +22,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login">
+
+        </activity>
+
+        <activity android:name=".activity.MainActivity"/>
+
+        <activity android:name=".practice.keepAlive.KeepAliveActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,9 +38,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.MainActivity">
-
-        </activity>
+        <service android:name=".practice.keepAlive.GrayService"/>
+        <service android:name=".practice.keepAlive.GrayService$GrayInnerService"/>
     </application>
 
 </manifest>
