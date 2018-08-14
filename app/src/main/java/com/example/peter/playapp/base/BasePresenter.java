@@ -1,5 +1,6 @@
 package com.example.peter.playapp.base;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 
 import com.example.peter.playapp.HttpMethods;
@@ -39,6 +40,7 @@ public class BasePresenter <T>{
         }
     }
 
+    @SuppressLint("CheckResult")
     public void addSubscription(Observable observable, DisposableObserver observer) {
         if (mCompositeDisposable == null) {
             mCompositeDisposable = new CompositeDisposable();

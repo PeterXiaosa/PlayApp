@@ -1,6 +1,7 @@
 package com.example.peter.playapp.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.os.Parcel;
@@ -73,17 +74,6 @@ public class MainActivity extends BaseActivity {
             ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
         }
 
-//        learnRxJava2();
-//        learnRxJava2Map();
-//        learnRxJava2Zip();
-//        learnRxJava2Concat();
-//        learnRxJava2FlatMap();
-//        learnRxJava2Distinct();
-//        learnRxJava2Filter();
-//        learnRxJava2Buffer();
-//        learnRxJava2Timer();
-//        learnRxJava2Skip();
-//        learnRxJava2Take();
         learnRxJava2Single();
     }
 
@@ -171,6 +161,7 @@ public class MainActivity extends BaseActivity {
                 });
     }
 
+    @SuppressLint("CheckResult")
     private void learnRxJava2FlatMap() {
         Observable.create(new ObservableOnSubscribe<Integer>() {
             @Override

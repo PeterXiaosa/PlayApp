@@ -1,6 +1,7 @@
 package com.example.peter.playapp.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -23,11 +24,21 @@ import com.example.peter.playapp.util.DownLoadUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 
 public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginView{
@@ -38,6 +49,8 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     EditText et_password;
     @BindView(R.id.activity_login_tv_login)
     TextView tv_login;
+    @BindView(R.id.activity_login_tv_register)
+    TextView tv_register;
 
     // 可以考虑一下将加载数据放到presenter中去。
     @Override
@@ -80,6 +93,8 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
 
             }
         }
+
+        bindRegisterClick();
     }
 
     @Override
@@ -87,28 +102,59 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
 
     }
 
+    @SuppressLint("CheckResult")
     @OnClick(R.id.activity_login_tv_login)
     public void setBtn_login(){
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        final UserInfo userInfo = new UserInfo();
+        userInfo.setAccount(et_account.getText().toString());
+        userInfo.setPassword(et_password.getText().toString());
+        userInfo.setGenkey(AppContext.getInstance().getGenKey());
+        userInfo.setDeviceId(AppContext.getInstance().getDeviceId());
 
-//        if ("".equals(et_account.getText().toString())){
-//            Toast.makeText(this, "未填写账号", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//        if ("".equals(et_password.getText().toString())){
-//            Toast.makeText(this, "未填写密码", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        UserInfo userInfo = new UserInfo();
-//        userInfo.setAccount(et_account.getText().toString());
-//        userInfo.setPassword(et_password.getText().toString());
-//        userInfo.setGenkey(AppContext.getInstance().getGenKey());
-//        userInfo.setDeviceId(AppContext.getInstance().getDeviceId());
-//
-//        presenter.login(userInfo);
-//
+        Observable.create(new ObservableOnSubscribe<UserInfo>() {
+            @Override
+            public void subscribe(ObservableEmitter<UserInfo> e) throws Exception {
+                e.onNext(userInfo);
+            }
+        }).map(new Function<UserInfo, Boolean>() {
+            @Override
+            public Boolean apply(UserInfo s) throws Exception {
+                if (s.getAccount().trim().isEmpty()) {
+                    Toast.makeText(getBaseContext(), "未填写账号", Toast.LENGTH_SHORT).show();
+                    return false;
+                }else if (s.getPassword().trim().isEmpty()){
+                    Toast.makeText(getBaseContext(), "未填写密码", Toast.LENGTH_SHORT).show();
+                    return false;
+                } else{
+                    return true;
+                }
+            }
+        }).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
+                if (aBoolean){
+                    presenter.login(userInfo);
+                }
+            }
+        });
 //        DownLoadUtil.downClassFile();
+    }
+
+    @OnClick(R.id.activity_login_tv_register)
+    public void register(){
+        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+    }
+
+    @SuppressLint("CheckResult")
+    private void bindRegisterClick() {
+//        RxView.clicks(tv_register)
+//                .throttleFirst(2, TimeUnit.SECONDS)
+//                .subscribe(new Consumer<Object>() {
+//                    @Override
+//                    public void accept(Object aVoid) throws Exception {
+//
+//                    }
+//                });
     }
 
     @Override
@@ -121,8 +167,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         // 可以封装成json再传过来，处理逻辑在presenter中处理。
         Gson gson = new Gson();
         if (loginModel.getContent() != null) {
-            JsonObject jsonObject = new JsonParser().parse(loginModel.getContent().toString()).getAsJsonObject();
-//            Toast.makeText(this, "登录成功, accesstoken = " + jsonObject.get("accesstoken"), Toast.LENGTH_SHORT).show();
+//            JsonObject jsonObject = new JsonParser().parse(loginModel.getContent().toString()).getAsJsonObject();
             Toast.makeText(this, "登录成功" , Toast.LENGTH_SHORT).show();
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
         }else {
