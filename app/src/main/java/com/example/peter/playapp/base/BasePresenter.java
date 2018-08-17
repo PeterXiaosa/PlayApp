@@ -4,8 +4,11 @@ import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 
 import com.example.peter.playapp.HttpMethods;
+import com.example.peter.playapp.bean.ServerBean;
 import com.example.peter.playapp.retrofit.Api;
+import com.example.peter.playapp.retrofit.ApiCallback;
 import com.example.peter.playapp.retrofit.ApiClient;
+import com.example.peter.playapp.util.ErrorHelper;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -51,5 +54,25 @@ public class BasePresenter <T>{
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(observer);
+    }
+
+    public void errorCodeSubscription(int errorCode, final ServerBean.errorCallback callback){
+        addSubscription(ErrorHelper.getInstance().getObservableByErrorCode(errorCode, api), new ApiCallback<ServerBean>() {
+
+            @Override
+            public void onSuccess(ServerBean model) {
+                callback.onSuccess(model);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                callback.onFail(msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
     }
 }

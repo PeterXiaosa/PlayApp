@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.peter.playapp.AppContext;
 import com.example.peter.playapp.R;
 import com.example.peter.playapp.bean.UserInfo;
+import com.example.peter.playapp.data.LoginUser;
 import com.example.peter.playapp.mvp.MvpActivity;
 import com.example.peter.playapp.mvp.model.RegisterModel;
 import com.example.peter.playapp.mvp.presenter.RegisterPresenter;
@@ -67,7 +68,7 @@ public class RegisterActivity extends MvpActivity<RegisterPresenter> implements 
         final UserInfo userInfo = new UserInfo();
         userInfo.setAccount(et_account.getText().toString().trim());
         userInfo.setPassword(et_password.getText().toString().trim());
-        userInfo.setDeviceId(AppContext.getInstance().getDeviceId());
+        userInfo.setDeviceId(LoginUser.getInstance().getDeviceId());
         userInfo.setGenkey("123");
         presenter.register(userInfo);
 

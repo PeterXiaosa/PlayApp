@@ -48,12 +48,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity {
 
-//    @BindView(R.id.btn_fix)
-//    Button btn_fix;
     @BindView(R.id.btn_hot_fix)
     Button btn_hot_fix;
-//    @BindView(R.id.iv_test)
-//    ImageView iv_test;
 
     final String TAG = "rxJava";
 
@@ -78,6 +74,19 @@ public class MainActivity extends BaseActivity {
     }
 
     private void learnRxJava2Single() {
+        Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> e) throws Exception {
+
+            }
+        }).publish().subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+
+            }
+        });
+
+
         Single.just(new Random().nextInt())
                 .subscribe(new SingleObserver<Integer>() {
                     @Override
@@ -258,6 +267,11 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onClick(View v) {
+
+    }
+
+    @Override
+    public void reflect(String methodName) {
 
     }
 }

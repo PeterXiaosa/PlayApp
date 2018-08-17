@@ -21,7 +21,7 @@ import retrofit2.http.Url;
 
 public interface Api {
     //baseUrl
-    String BASE_URL = "http://192.168.18.7:8080/untitled/";
+    String BASE_URL = "http://192.168.18.73:8080/untitled/";
 //    String BASE_URL = "http://47.100.210.98:8080/app/";
 
     @Headers({"Content-Type: application/json","Accept: application/json"})//需要添加头
@@ -33,4 +33,8 @@ public interface Api {
     //登录
     @POST("user/register")
     Observable<RegisterModel> register(@Body UserInfo userInfo);
+
+    //刷新AccessToken
+    @POST("certificate/regettoken")
+    Observable<ServerBean> refreshToken(String account, String timeStamp, String nonce, String signature);
 }

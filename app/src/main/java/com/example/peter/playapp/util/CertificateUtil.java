@@ -11,18 +11,21 @@ public class CertificateUtil {
             '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
     public static String generaterGenKey(){
-        String tempString = getCurrentTime() + getRandomString(lengthOfNonce);
+        String tempString = getTimeStamp() + getRandomString();
 
         return "peter" + stringSHA1(tempString);
     }
 
-    public static String getCurrentTime(){
+    // 获取timeStamp
+    public static String getTimeStamp(){
         final java.text.SimpleDateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();//获取当前时间
         return format.format(date);
     }
 
-    public static String getRandomString(int length) { //length表示生成字符串的长度
+    // 获取随机字符串
+    public static String getRandomString() { //length表示生成字符串的长度
+        int length = CertificateUtil.lengthOfNonce;
         String base = "abcdefghijklmnopqrstuvwxyz0123456789";
         Random random = new Random();
         StringBuilder sb = new StringBuilder();
@@ -101,7 +104,6 @@ public class CertificateUtil {
     }
 
 
-
     /**
      * Takes the raw bytes from the digest and formats them correct.
      *
@@ -130,5 +132,42 @@ public class CertificateUtil {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static String generateSignature(String genkey, String timeStamp, String nonce){
+        String[] strs = {genkey, timeStamp, nonce};
+        String[] sortedStrs = sortByDictory(strs);
+        String tempString = "";
+
+        if (sortedStrs[0].equals(genkey)){
+            tempString = genkey;
+        }
+        else if (sortedStrs[0].equals(nonce)){
+            tempString = nonce;
+        }
+        else if (sortedStrs[0].equals(timeStamp)){
+            tempString = timeStamp;
+        }
+
+        if (sortedStrs[1].equals(genkey)){
+            tempString =  tempString +genkey;
+        }
+        else if (sortedStrs[1].equals(nonce)){
+            tempString = tempString +nonce;
+        }
+        else if (sortedStrs[1].equals(timeStamp)){
+            tempString = tempString + timeStamp;
+        }
+
+        if (sortedStrs[2].equals(genkey)){
+            tempString = tempString +genkey;
+        }
+        else if (sortedStrs[2].equals(nonce)){
+            tempString = tempString +nonce;
+        }
+        else if (sortedStrs[2].equals(timeStamp)){
+            tempString = tempString +timeStamp;
+        }
+        return encode(tempString);
     }
 }

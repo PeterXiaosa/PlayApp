@@ -15,28 +15,23 @@ import android.widget.Toast;
 
 import com.example.peter.playapp.AppContext;
 import com.example.peter.playapp.R;
+import com.example.peter.playapp.data.LoginUser;
 import com.example.peter.playapp.mvp.MvpActivity;
 import com.example.peter.playapp.bean.UserInfo;
-import com.example.peter.playapp.mvp.model.LoginModel;
+import com.example.peter.playapp.mvp.modelImpl.LoginModelImpl;
 import com.example.peter.playapp.mvp.presenter.LoginPresenter;
 import com.example.peter.playapp.mvp.view.LoginView;
-import com.example.peter.playapp.util.DownLoadUtil;
+import com.example.peter.playapp.util.ErrorHelper;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.jakewharton.rxbinding2.view.RxView;
-import com.jakewharton.rxbinding2.widget.RxTextView;
 
-import java.util.concurrent.TimeUnit;
-
-import javax.inject.Inject;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.ObservableSource;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
@@ -93,8 +88,6 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
 
             }
         }
-
-        bindRegisterClick();
     }
 
     @Override
@@ -104,12 +97,13 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
 
     @SuppressLint("CheckResult")
     @OnClick(R.id.activity_login_tv_login)
-    public void setBtn_login(){
+    public void login(){
+        String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
         final UserInfo userInfo = new UserInfo();
         userInfo.setAccount(et_account.getText().toString());
         userInfo.setPassword(et_password.getText().toString());
-        userInfo.setGenkey(AppContext.getInstance().getGenKey());
-        userInfo.setDeviceId(AppContext.getInstance().getDeviceId());
+        userInfo.setGenkey(LoginUser.getInstance().getGenKey());
+        userInfo.setDeviceId(LoginUser.getInstance().getDeviceId());
 
         Observable.create(new ObservableOnSubscribe<UserInfo>() {
             @Override
@@ -137,24 +131,11 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
                 }
             }
         });
-//        DownLoadUtil.downClassFile();
     }
 
     @OnClick(R.id.activity_login_tv_register)
     public void register(){
         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-    }
-
-    @SuppressLint("CheckResult")
-    private void bindRegisterClick() {
-//        RxView.clicks(tv_register)
-//                .throttleFirst(2, TimeUnit.SECONDS)
-//                .subscribe(new Consumer<Object>() {
-//                    @Override
-//                    public void accept(Object aVoid) throws Exception {
-//
-//                    }
-//                });
     }
 
     @Override
@@ -163,26 +144,25 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     }
 
     @Override
-    public void loginSuccess(LoginModel loginModel) {
-        // 可以封装成json再传过来，处理逻辑在presenter中处理。
-        Gson gson = new Gson();
-        if (loginModel.getContent() != null) {
-//            JsonObject jsonObject = new JsonParser().parse(loginModel.getContent().toString()).getAsJsonObject();
-            Toast.makeText(this, "登录成功" , Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-        }else {
-            Toast.makeText(this, "登录失败, " + loginModel.getMsg(), Toast.LENGTH_SHORT).show();
-        }
+    public void loginSuccess() {
+        Toast.makeText(this, "登录成功" , Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+    }
+
+    @Override
+    public void loginFail(String errorMsg, int errorCode) {
+        String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
+        Toast.makeText(this, "登录失败, " + errorMsg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void loginFail(String errorMsg) {
-        Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "登录失败, " + errorMsg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showLoading() {
-
+        Toast.makeText(this, "showLoading" , Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -193,6 +173,20 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     @Override
     protected LoginPresenter createPresenter() {
         return new LoginPresenter(this);
+    }
+
+    @Override
+    public void reflect(String methodName) {
+        Method method = null;
+        try {
+//            method = LoginActivity.class.getMethod(methodName);
+            method = this.getClass().getMethod(methodName, (Class<?>) null);
+//            this.getClass().getMethod()
+            this.use(method);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
 

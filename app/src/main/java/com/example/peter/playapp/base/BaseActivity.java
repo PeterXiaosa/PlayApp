@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
+import com.example.peter.playapp.Interface.BaseMethodInterface;
 import com.example.peter.playapp.Interface.BaseViewInterface;
+
+import java.lang.reflect.Method;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends FragmentActivity implements View.OnClickListener,BaseViewInterface {
+public abstract class BaseActivity extends FragmentActivity implements View.OnClickListener, BaseViewInterface, BaseMethodInterface{
 
     private boolean _isVisible;
 
@@ -60,32 +63,9 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         super.onResume();
     }
 
-//    protected String jsonTokener(String in) {
-//        if (in != null && in.startsWith("\ufeff")) {
-//            in = in.substring(1);
-//        }
-//        return in;
-//    }
-
-//    protected void showDialog() {
-//        if (waitDialog == null) {
-//            waitDialog = DialogHelp.getWaitDialog(this, getString(R.string.saving));
-//        }
-//        waitDialog.setCancelable(false);
-//        waitDialog.setCanceledOnTouchOutside(false);
-//        waitDialog.show();
-//    }
-
-//    protected void showDialog(String msg) {
-//        if (waitDialog == null) {
-//            waitDialog = DialogHelp.getWaitDialog(this, msg);
-//        }
-//        waitDialog.show();
-//    }
-
-//    protected void hideDialog() {
-//        if (waitDialog != null) {
-//            waitDialog.dismiss();
-//        }
-//    }
+    public void use(Method method) throws Exception{
+        if (method == null)
+            return;
+        method.invoke(this);
+    }
 }

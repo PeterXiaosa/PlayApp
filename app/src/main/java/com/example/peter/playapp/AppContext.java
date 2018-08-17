@@ -13,7 +13,9 @@ import android.telephony.TelephonyManager;
 import com.example.peter.playapp.activity.LoginActivity;
 import com.example.peter.playapp.activity.MainActivity;
 import com.example.peter.playapp.base.BaseApplication;
+import com.example.peter.playapp.data.LoginUser;
 import com.example.peter.playapp.util.CertificateUtil;
+import com.example.peter.playapp.util.CrashHandler;
 import com.example.peter.playapp.util.FixDexUtils;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -24,7 +26,6 @@ import java.util.List;
 public class AppContext extends BaseApplication {
 
     static AppContext instance;
-    private String genKey;
     private String deviceId = "";
     private String accessToken;
 
@@ -48,7 +49,7 @@ public class AppContext extends BaseApplication {
         //初始化换肤框架
 //        initSkinCompatManager();
         //写崩溃日志
-//        EsCrashHandler.getInstance().init(this);
+        CrashHandler.getInstance().init(this);
     }
 
     private void init() {
@@ -66,16 +67,17 @@ public class AppContext extends BaseApplication {
     private void generateGenKey() {
         //初始化生成genKey
         SharedPreferences sharedPreferences = getSharedPreferences("genkeyLibrary", MODE_PRIVATE);
-        genKey = sharedPreferences.getString("genkey", "");
+        String genKey = sharedPreferences.getString("genkey", "");
 
         if (genKey.trim().equals("")) {
             genKey = CertificateUtil.generaterGenKey();
-            genKey = "peter08f8cee142599dd80660d9192a4520f7cadbf247";
-
             SharedPreferences sp = getSharedPreferences("genkeyLibrary", MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
             editor.putString("genkey", genKey);
             editor.apply();
+            LoginUser.getInstance().setGenKey(genKey);
+        }else {
+            LoginUser.getInstance().setGenKey(genKey);
         }
     }
 
@@ -100,7 +102,6 @@ public class AppContext extends BaseApplication {
             e.printStackTrace();
         }
         String szDevIDShort = "35" + //we make this look like a valid IMEI
-
                 Build.BOARD.length() % 10 +
                 Build.BRAND.length() % 10 +
                 Build.CPU_ABI.length() % 10 +
@@ -114,34 +115,16 @@ public class AppContext extends BaseApplication {
                 Build.TAGS.length() % 10 +
                 Build.TYPE.length() % 10 +
                 Build.USER.length() % 10; //13
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-
         String devid = ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
         if(devid != null) {
             szDevIDShort = szDevIDShort + serial + devid;
         }else {
             szDevIDShort = szDevIDShort + serial;
         }
-        this.deviceId = szDevIDShort;
-        this.deviceId = "357696505656247e5570b44865736036768169";
-    }
 
-    public String getDeviceId(){
-        return deviceId;
-    }
-
-    public String getGenKey() {
-        return genKey;
-    }
-
-    public void setAccessToken(String accessToken){
-        this.accessToken = accessToken;
-    }
-
-    public String getAccessToken(){
-        return accessToken;
+        LoginUser.getInstance().setDeviceId(szDevIDShort);
     }
 }
