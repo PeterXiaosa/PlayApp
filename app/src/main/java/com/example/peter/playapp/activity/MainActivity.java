@@ -3,28 +3,18 @@ package com.example.peter.playapp.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
-import android.os.Environment;
-import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.example.peter.playapp.HttpMethods;
 import com.example.peter.playapp.R;
-import com.example.peter.playapp.base.BaseActivity;
-import com.example.peter.playapp.bean.ServerBean;
-import com.example.peter.playapp.bean.UserInfo;
-import com.example.peter.playapp.util.FixDexUtils;
-import com.example.peter.playapp.util.SimpleHotFixBugTest;
+import com.example.peter.playapp.base.BasePresenter;
+import com.example.peter.playapp.mvp.MvpActivity;
+import com.example.peter.playapp.mvp.model.MainModel;
+import com.example.peter.playapp.mvp.presenter.MainPresenter;
+import com.example.peter.playapp.mvp.view.MainView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +39,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends MvpActivity<MainPresenter> implements MainView {
 
     @BindView(R.id.activity_main_rv_type)
     RecyclerView rv_type;
@@ -275,6 +265,31 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void reflect(String methodName) {
+
+    }
+
+    @Override
+    protected MainPresenter createPresenter() {
+        return new MainPresenter(this);
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void cancelLoading() {
+
+    }
+
+    @Override
+    public void getProductSuccess(MainModel mainModel) {
+
+    }
+
+    @Override
+    public void getProductFail(String msg) {
 
     }
 }

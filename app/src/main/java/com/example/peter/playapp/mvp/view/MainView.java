@@ -4,7 +4,7 @@ import com.example.peter.playapp.base.BaseView;
 import com.example.peter.playapp.mvp.model.MainModel;
 
 public interface MainView extends BaseView {
-    void getDataSuccess(MainModel mainModel);
+    void getProductSuccess(MainModel mainModel);
 
-    void getDataFail(String msg);
+    void getProductFail(String msg);
 }

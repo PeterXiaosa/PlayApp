@@ -12,25 +12,7 @@ public class MainPresenter extends BasePresenter<MainView>{
         attachView(view);
     }
 
-    public void login(UserInfo userInfo){
-        mvpView.showLoading();
+    public void getProduct(int type){
 
-        addSubscription(api.login(userInfo),
-                new ApiCallback<MainModel>() {
-                    @Override
-                    public void onSuccess(MainModel model) {
-
-                    }
-
-                    @Override
-                    public void onFailure(String msg) {
-
-                    }
-
-                    @Override
-                    public void onFinish() {
-
-                    }
-                });
     }
 }
