@@ -1,23 +1,21 @@
 package com.example.peter.playapp.retrofit;
 
-import com.example.peter.playapp.bean.ContactInfo;
-import com.example.peter.playapp.bean.ContactInfoRequest;
 import com.example.peter.playapp.bean.ServerBean;
 import com.example.peter.playapp.bean.UserInfo;
-import com.example.peter.playapp.mvp.model.LoginModel;
 import com.example.peter.playapp.mvp.model.RegisterModel;
+import com.example.peter.playapp.mvp.model.LoginModel;
 
-import java.util.List;
+import org.json.JSONObject;
+
+import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
-import retrofit2.http.Url;
 
 public interface Api {
     //baseUrl
@@ -34,7 +32,13 @@ public interface Api {
     @POST("user/register")
     Observable<RegisterModel> register(@Body UserInfo userInfo);
 
+    //TODO RequestBody传入服务器的参数不对，服务器无法接受到Json格式，不想创建JavaBean的前提下需要使用RequetBody。
+    //TODO 使用@FieldMap需要传入HashMap，同时需要添加注解@FormUrlEncoded。
     //刷新AccessToken
     @POST("certificate/regettoken")
-    Observable<ServerBean> refreshToken(String account, String timeStamp, String nonce, String signature);
+    Observable<ServerBean> refreshToken(@Body RequestBody body);
+
+    // 获取产品信息
+    @POST("certificate/regettoken")
+    Observable<ServerBean> getProductInfo(@Body RequestBody body);
 }

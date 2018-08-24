@@ -2,7 +2,6 @@ package com.example.peter.playapp;
 
 import com.example.peter.playapp.mvp.model.LoginModel;
 import com.example.peter.playapp.retrofit.Api;
-import com.example.peter.playapp.bean.ServerBean;
 import com.example.peter.playapp.bean.UserInfo;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 

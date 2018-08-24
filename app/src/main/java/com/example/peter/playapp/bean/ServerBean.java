@@ -1,12 +1,6 @@
 package com.example.peter.playapp.bean;
 
 public class ServerBean<T> {
-    public interface errorCallback{
-        void onSuccess(ServerBean serverBean);
-
-        void onFail(String msg);
-    }
-
     private int status;
     private String msg;
     private T content;

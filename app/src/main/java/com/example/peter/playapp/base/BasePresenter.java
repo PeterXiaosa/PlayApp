@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.example.peter.playapp.HttpMethods;
 import com.example.peter.playapp.bean.ServerBean;
+import com.example.peter.playapp.mvp.contract.errorCallback;
 import com.example.peter.playapp.retrofit.Api;
 import com.example.peter.playapp.retrofit.ApiCallback;
 import com.example.peter.playapp.retrofit.ApiClient;
@@ -56,7 +57,7 @@ public class BasePresenter <T>{
                 .subscribeWith(observer);
     }
 
-    public void errorCodeSubscription(int errorCode, final ServerBean.errorCallback callback){
+    public void errorCodeSubscription(int errorCode, final errorCallback callback){
         addSubscription(ErrorHelper.getInstance().getObservableByErrorCode(errorCode, api), new ApiCallback<ServerBean>() {
 
             @Override

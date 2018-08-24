@@ -18,13 +18,10 @@ import com.example.peter.playapp.R;
 import com.example.peter.playapp.data.LoginUser;
 import com.example.peter.playapp.mvp.MvpActivity;
 import com.example.peter.playapp.bean.UserInfo;
-import com.example.peter.playapp.mvp.modelImpl.LoginModelImpl;
 import com.example.peter.playapp.mvp.presenter.LoginPresenter;
 import com.example.peter.playapp.mvp.view.LoginView;
-import com.example.peter.playapp.util.ErrorHelper;
-import com.google.gson.Gson;
+import com.example.peter.playapp.util.ToastUtil;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import butterknife.BindView;
@@ -98,7 +95,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     @SuppressLint("CheckResult")
     @OnClick(R.id.activity_login_tv_login)
     public void login(){
-        String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
+        final String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
         final UserInfo userInfo = new UserInfo();
         userInfo.setAccount(et_account.getText().toString());
         userInfo.setPassword(et_password.getText().toString());
@@ -114,10 +111,10 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
             @Override
             public Boolean apply(UserInfo s) throws Exception {
                 if (s.getAccount().trim().isEmpty()) {
-                    Toast.makeText(getBaseContext(), "未填写账号", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(getBaseContext(), "未填写账号");
                     return false;
                 }else if (s.getPassword().trim().isEmpty()){
-                    Toast.makeText(getBaseContext(), "未填写密码", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(getBaseContext(), "未填写密码");
                     return false;
                 } else{
                     return true;
@@ -127,7 +124,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
             @Override
             public void accept(Boolean aBoolean) throws Exception {
                 if (aBoolean){
-                    presenter.login(userInfo);
+                    presenter.login(userInfo, methodName);
                 }
             }
         });
@@ -152,17 +149,17 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     @Override
     public void loginFail(String errorMsg, int errorCode) {
         String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
-        Toast.makeText(this, "登录失败, " + errorMsg, Toast.LENGTH_SHORT).show();
+        ToastUtil.show(getBaseContext(), "登录失败, " + errorMsg);
     }
 
     @Override
     public void loginFail(String errorMsg) {
-        Toast.makeText(this, "登录失败, " + errorMsg, Toast.LENGTH_SHORT).show();
+        ToastUtil.show(getBaseContext(), "登录失败, " + errorMsg);
     }
 
     @Override
     public void showLoading() {
-        Toast.makeText(this, "showLoading" , Toast.LENGTH_SHORT).show();
+        ToastUtil.show(getBaseContext(), "showLoading");
     }
 
     @Override
@@ -179,14 +176,10 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     public void reflect(String methodName) {
         Method method = null;
         try {
-//            method = LoginActivity.class.getMethod(methodName);
-            method = this.getClass().getMethod(methodName, (Class<?>) null);
-//            this.getClass().getMethod()
+            method = this.getClass().getMethod(methodName, null);
             this.use(method);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }
-

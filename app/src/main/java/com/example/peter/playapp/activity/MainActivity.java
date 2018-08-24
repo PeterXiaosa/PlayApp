@@ -9,8 +9,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -48,8 +51,10 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity {
 
-    @BindView(R.id.btn_hot_fix)
-    Button btn_hot_fix;
+    @BindView(R.id.activity_main_rv_type)
+    RecyclerView rv_type;
+    @BindView(R.id.activity_main_rv_product)
+    RecyclerView rv_product;
 
     final String TAG = "rxJava";
 
@@ -69,8 +74,6 @@ public class MainActivity extends BaseActivity {
             };
             ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
         }
-
-        learnRxJava2Single();
     }
 
     private void learnRxJava2Single() {

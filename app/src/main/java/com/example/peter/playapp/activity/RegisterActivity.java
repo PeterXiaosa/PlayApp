@@ -69,8 +69,7 @@ public class RegisterActivity extends MvpActivity<RegisterPresenter> implements 
         userInfo.setAccount(et_account.getText().toString().trim());
         userInfo.setPassword(et_password.getText().toString().trim());
         userInfo.setDeviceId(LoginUser.getInstance().getDeviceId());
-        userInfo.setGenkey("123");
-        presenter.register(userInfo);
+        userInfo.setGenkey(LoginUser.getInstance().getGenKey());
 
         Observable.create(new ObservableOnSubscribe<UserInfo>() {
             @Override
@@ -118,10 +117,16 @@ public class RegisterActivity extends MvpActivity<RegisterPresenter> implements 
     @Override
     public void registerSuccess(RegisterModel registerModel) {
         Toast.makeText(this, "注册成功 : " + registerModel.getMsg(), Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override
     public void registerFail(String errorMsg) {
         Toast.makeText(this, "注册失败 : " + errorMsg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void reflect(String methodName) {
+
     }
 }

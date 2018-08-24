@@ -5,11 +5,10 @@ import android.support.annotation.NonNull;
 import com.example.peter.playapp.base.BasePresenter;
 import com.example.peter.playapp.bean.ServerBean;
 import com.example.peter.playapp.bean.UserInfo;
+import com.example.peter.playapp.mvp.contract.errorCallback;
 import com.example.peter.playapp.mvp.model.LoginModel;
-import com.example.peter.playapp.mvp.modelImpl.LoginModelImpl;
 import com.example.peter.playapp.mvp.view.LoginView;
 import com.example.peter.playapp.retrofit.ApiCallback;
-import com.example.peter.playapp.util.ErrorHelper;
 
 // Presenter 中保留View的引用, 通过Model去进行数据存储，同时通过Callback进行Model与Presenter的交互
 public class LoginPresenter extends BasePresenter<LoginView>{
@@ -19,24 +18,29 @@ public class LoginPresenter extends BasePresenter<LoginView>{
         initLoginData();
     }
 
-    public void login(UserInfo userInfo){
+    private void initLoginData(){
+
+    }
+
+    public void login(final UserInfo userInfo, final String methodName) {
         mvpView.showLoading();
         addSubscription(api.login(userInfo),
-                new ApiCallback<LoginModelImpl>() {
+                new ApiCallback<LoginModel>() {
                     @Override
-                    public void onSuccess(LoginModelImpl model) {
+                    public void onSuccess(LoginModel model) {
                         // 获取数据成功去更新View
                         if (model.getStatus() == 0){
                             model.saveLoginUserInfo();
                             mvpView.loginSuccess();
                         }else {
+                            model.saveLoginUserAccountName(userInfo.getAccount());
                             mvpView.loginFail(model.getMsg(), model.getStatus());
-
-                            errorCodeSubscription(model.getStatus(), new ServerBean.errorCallback() {
+                            errorCodeSubscription(model.getStatus(), new errorCallback() {
                                 @Override
                                 public void onSuccess(ServerBean model) {
                                     if (model.getStatus() == 0){
-
+                                        // 重新调用原方法继续之前操作
+                                        mvpView.reflect(methodName);
                                     }else {
 
                                     }
@@ -60,9 +64,5 @@ public class LoginPresenter extends BasePresenter<LoginView>{
                         mvpView.cancelLoading();
                     }
                 });
-    }
-
-    public void initLoginData(){
-
     }
 }

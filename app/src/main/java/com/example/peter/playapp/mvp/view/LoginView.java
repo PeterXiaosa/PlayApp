@@ -8,4 +8,6 @@ public interface LoginView extends BaseView{
     void loginFail(String errorMsg, int errorCode);
 
     void loginFail(String errorMsg);
+
+    void reflect(String methodName);
 }
