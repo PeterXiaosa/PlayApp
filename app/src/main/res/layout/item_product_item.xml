@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y121">
+    <TextView
+        android:id="@+id/item_product_tv_type_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y120"
+        android:text="蔬菜类"
+        android:gravity="center"
+        android:textColor="#000"
+        android:textSize="@dimen/x40"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y1"
+        android:background="#000"/>
+</RelativeLayout>

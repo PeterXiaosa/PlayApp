@@ -17,6 +17,11 @@
             android:layout_width="@dimen/x300"
             android:layout_height="match_parent"/>
 
+        <View
+            android:layout_width="@dimen/x1"
+            android:layout_height="match_parent"
+            android:background="#000"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/activity_main_rv_product"
             android:layout_width="match_parent"
@@ -32,7 +37,7 @@
             android:layout_height="match_parent"
             android:text="确定"
             android:textColor="#000"
-            android:textSize="@dimen/x32"
+            android:textSize="@dimen/x46"
             android:gravity="center"/>
     </RelativeLayout>
 </LinearLayout>

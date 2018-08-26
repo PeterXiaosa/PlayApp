@@ -2,6 +2,7 @@ package com.example.peter.playapp.retrofit;
 
 import com.example.peter.playapp.bean.ServerBean;
 import com.example.peter.playapp.bean.UserInfo;
+import com.example.peter.playapp.mvp.model.MainModel;
 import com.example.peter.playapp.mvp.model.RegisterModel;
 import com.example.peter.playapp.mvp.model.LoginModel;
 
@@ -21,6 +22,7 @@ public interface Api {
     //baseUrl
     String BASE_URL = "http://192.168.18.73:8080/untitled/";
 //    String BASE_URL = "http://47.100.210.98:8080/app/";
+//    String BASE_URL =  "http://192.168.18.190:8080/";
 
     @Headers({"Content-Type: application/json","Accept: application/json"})//需要添加头
 
@@ -39,6 +41,6 @@ public interface Api {
     Observable<ServerBean> refreshToken(@Body RequestBody body);
 
     // 获取产品信息
-    @POST("certificate/regettoken")
-    Observable<ServerBean> getProductInfo(@Body RequestBody body);
+    @POST("product/detail")
+    Observable<MainModel> getProductInfo(@Body RequestBody body);
 }
