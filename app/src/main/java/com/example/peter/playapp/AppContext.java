@@ -93,6 +93,7 @@ public class AppContext extends BaseApplication {
     }
 
     public void setDeviceId() {
+        LoginUser.getInstance().setDeviceId("testdeviceid");
         String serial = "";
         try {
             serial = Build.class.getField("SERIAL").get(null).toString();

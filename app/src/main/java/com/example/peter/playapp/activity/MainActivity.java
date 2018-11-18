@@ -2,14 +2,23 @@ package com.example.peter.playapp.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.MessageQueue;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.peter.playapp.R;
 import com.example.peter.playapp.adapter.ProductDetailAdapter;
 import com.example.peter.playapp.adapter.ProductTypeAdapter;
@@ -21,9 +30,13 @@ import com.example.peter.playapp.mvp.model.MainModel;
 import com.example.peter.playapp.mvp.presenter.MainPresenter;
 import com.example.peter.playapp.mvp.view.MainView;
 
+import org.xmlpull.v1.XmlPullParser;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -58,8 +71,9 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
 
     @Override
     public void initView() {
-
+        Glide.with(this).load("").into(new ImageView(this));
     }
+
 
     @Override
     public void initData() {

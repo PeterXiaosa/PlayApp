@@ -20,9 +20,10 @@ import retrofit2.http.POST;
 
 public interface Api {
     //baseUrl
-    String BASE_URL = "http://192.168.18.73:8080/untitled/";
-//    String BASE_URL = "http://47.100.210.98:8080/app/";
-//    String BASE_URL =  "http://192.168.18.190:8080/";
+    String BASE_URL = "http://106.15.92.137:8080/app/";
+//    String BASE_URL = "http://10.0.2.2:8080/";
+//    String BASE_URL = "http://106.15.92.137:8080/app/";
+//    String BASE_URL =  "http://106.15.92.137:8080/";
 
     @Headers({"Content-Type: application/json","Accept: application/json"})//需要添加头
 
