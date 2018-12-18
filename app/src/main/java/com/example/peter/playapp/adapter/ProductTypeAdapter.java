@@ -9,26 +9,31 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.peter.playapp.R;
+import com.example.peter.playapp.bean.ProductTypeBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductTypeAdapter extends RecyclerView.Adapter<ProductTypeAdapter.ViewHolder>{
     private Context mContext;
-    private List<String> mData = new ArrayList<>();
+    private List<ProductTypeBean> mData = new ArrayList<>();
     private onClickType listener;
 
     public interface onClickType{
         void clickTypeItem(String typeName);
     }
 
-    public ProductTypeAdapter(Context context, List<String> data) {
+    public ProductTypeAdapter(Context context, List<ProductTypeBean> data) {
         this.mContext = context;
         this.mData = data;
     }
 
     public void setListener(onClickType listener){
         this.listener = listener;
+    }
+
+    public void setData(List<ProductTypeBean> data){
+        this.mData = data;
     }
 
     @NonNull
@@ -41,7 +46,8 @@ public class ProductTypeAdapter extends RecyclerView.Adapter<ProductTypeAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (mData != null && position < getItemCount()) {
-            final String typeName = mData.get(position);
+            ProductTypeBean productTypeBean = mData.get(position);
+            final String typeName = productTypeBean.getType_name();
 
             holder.tv_type_name.setText(typeName);
 

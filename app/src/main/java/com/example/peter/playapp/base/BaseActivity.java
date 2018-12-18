@@ -33,24 +33,13 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
             setContentView(getLayoutId());
         }
 
-        // 通过注解绑定控件
-//        ButterKnife.inject(this);
         ButterKnife.bind(this);
-
-        //透明状态栏
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        }
 
         initData();
         initView();
 
         _isVisible = true;
     }
-
-//    protected int getLayoutId() {
-//        return 0;
-//    }
 
     @Override
     protected void onPause() {

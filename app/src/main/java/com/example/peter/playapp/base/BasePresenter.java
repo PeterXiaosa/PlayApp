@@ -12,8 +12,12 @@ import com.example.peter.playapp.retrofit.ApiClient;
 import com.example.peter.playapp.util.ErrorHelper;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -57,6 +61,20 @@ public class BasePresenter <T>{
                 .subscribeWith(observer);
     }
 
+    @SuppressLint("CheckResult")
+    public void addSubscription(Observable observableFirst, Function<ServerBean, ObservableSource<?>> function, DisposableObserver observer){
+        if (mCompositeDisposable == null) {
+            mCompositeDisposable = new CompositeDisposable();
+        }
+
+        mCompositeDisposable.add(observer);
+
+        observableFirst.flatMap(function).subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(observer);
+    }
+
     public void errorCodeSubscription(int errorCode, final errorCallback callback){
         addSubscription(ErrorHelper.getInstance().getObservableByErrorCode(errorCode, api), new ApiCallback<ServerBean>() {
 
@@ -76,4 +94,8 @@ public class BasePresenter <T>{
             }
         });
     }
+
+    /**
+     * Returns the {@link ApiCallback} for {@code returnType} from the available {@linkplain #onUnSubscribe()() s}
+     */
 }

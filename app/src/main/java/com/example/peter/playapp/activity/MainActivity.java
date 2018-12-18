@@ -24,6 +24,7 @@ import com.example.peter.playapp.adapter.ProductDetailAdapter;
 import com.example.peter.playapp.adapter.ProductTypeAdapter;
 import com.example.peter.playapp.base.BasePresenter;
 import com.example.peter.playapp.bean.ProductInfo;
+import com.example.peter.playapp.bean.ProductTypeBean;
 import com.example.peter.playapp.data.ProductTypeData;
 import com.example.peter.playapp.mvp.MvpActivity;
 import com.example.peter.playapp.mvp.model.MainModel;
@@ -136,6 +137,11 @@ public class MainActivity extends MvpActivity<MainPresenter> implements MainView
 
     @Override
     public void cancelLoading() {
+
+    }
+
+    @Override
+    public void getProductTypeSuccess(List<ProductTypeBean> list) {
 
     }
 

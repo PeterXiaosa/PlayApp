@@ -5,9 +5,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -174,12 +176,42 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
 
     @Override
     public void reflect(String methodName) {
-        Method method = null;
-        try {
-            method = this.getClass().getMethod(methodName, null);
-            this.use(method);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        Method method = null;
+//        try {
+//            method = this.getClass().getMethod(methodName, null);
+//            this.use(method);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d("activity", "second z`onCreate");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("activity", "second onPause");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("activity", "second onResume");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("activity", "second onStart");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("activity", "second onStop");
     }
 }
