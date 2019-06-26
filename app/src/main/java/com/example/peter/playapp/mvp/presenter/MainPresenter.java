@@ -24,6 +24,9 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
+/**
+ * @author Peter
+ */
 public class MainPresenter extends BasePresenter<MainView>{
 
     public MainPresenter(MainView view){
@@ -37,8 +40,8 @@ public class MainPresenter extends BasePresenter<MainView>{
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(JSON, jsonObject.toString());
+        MediaType json = MediaType.parse("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(json, jsonObject.toString());
 
         addSubscription(api.getProductInfo(body),
                 new ApiCallback<MainModel>() {
